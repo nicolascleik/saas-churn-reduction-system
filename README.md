@@ -2,22 +2,33 @@
 
 Este projeto consiste na implementação Front-end e integração Back-end (Firebase) do fluxo de cancelamento de assinatura da plataforma de cursos **EngPlay**. 
 
-O objetivo do módulo não é apenas processar o cancelamento, mas atuar como uma ferramenta de retenção e coleta de feedback, identificando os motivos da saída do aluno e garantindo que ele esteja ciente das perdas envolvidas.
+O objetivo do módulo não é apenas processar o cancelamento, mas atuar como uma ferramenta de retenção estratégica (Churn Reduction) e coleta de feedback, identificando os motivos da saída do aluno através de dados qualitativos e quantitativos.
 
 ## Funcionalidades
 
-* **Fluxo de Retenção em Etapas:** Design persuasivo dividido em páginas de impacto, avaliação e diagnóstico.
-* **Coleta de Feedback:** Sistema de avaliação por estrelas e comentários.
-* **Persistência de Dados (Firebase):** Integração com Firestore Database para salvar os motivos do cancelamento e feedback.
-* **Gerenciamento de Estado Local:** Uso de `localStorage` para manter dados entre as páginas (ex: notas dadas na página anterior) e preferências do usuário.
+### Fluxo de Retenção
+* **Jornada Persuasiva:** Design dividido em etapas de impacto (aversão à perda), avaliação e diagnóstico.
+* **Soft Landing (72h):** O cancelamento não é imediato. O sistema agenda o encerramento para 72 horas, mantendo o acesso liberado para permitir ações de recuperação (Win-back) por parte da equipe.
+
+### Acessibilidade e Inclusão (Destaque)
+* **Modo Leitura (Text-to-Speech):** Implementação da **Web Speech API** nativa. O usuário pode ativar um modo onde o site lê em voz alta os textos e botões ao clicar, facilitando o uso para pessoas com baixa visão ou dislexia.
+* **VLibras:** Integração completa com o widget de tradução para Libras em todas as telas.
 * **Tema Dark/Light:** Sistema de troca de temas com persistência (o site "lembra" a escolha do usuário).
-* **Sidebar Responsiva:** Barra lateral com status (aberta/fechada) salvo na memória do navegador.
+
+### Segurança e Compliance
+* **Bloqueio Inteligente:** O botão de confirmação final inicia **bloqueado**.
+* **Validação de Termos:** O usuário é obrigado a marcar "Concordo com os Termos" e "Estou ciente da Perda" para liberar a ação de cancelamento, garantindo respaldo jurídico.
+
+### Dados e Persistência
+* **Persistência de Dados (Firebase):** Integração com Firestore Database para salvar o dossiê completo do cancelamento.
+* **Gerenciamento de Estado Local:** Uso de `localStorage` para manter dados temporários entre as páginas (ex: notas dadas na avaliação) e preferências de UI (Sidebar/Tema).
 
 ## Tecnologias Utilizadas
 
-* **HTML5** (Semântico)
-* **CSS3** (Variáveis, Flexbox e Grid Layout)
-* **JavaScript** (ES6+ Modules)
+* **HTML5** (Semântico e Acessível)
+* **CSS3** (Modular, Variáveis, Flexbox e Grid)
+* **JavaScript** (Vanilla JS ES6+ Modules)
+* **Web Speech API** (Síntese de voz nativa)
 * **Firebase Firestore** (Banco de Dados NoSQL)
 
 ---
@@ -56,13 +67,13 @@ Para rodar este projeto localmente, siga os passos abaixo.
 
 ### Pré-requisitos
 
-Como o projeto utiliza **ES6 Modules** (`import` / `type="module"`) para conectar ao Firebase, **você não pode apenas abrir o arquivo HTML com dois cliques**. É necessário rodar um servidor local simples.
+Como o projeto utiliza **ES6 Modules** (`import` / `type="module"`) para conectar ao Firebase, **você não pode apenas abrir o arquivo HTML com dois cliques** (devido a políticas de CORS dos navegadores). É necessário rodar um servidor local.
 
 ### Passo a Passo
 
 1.  **Clone o repositório:**
     ```bash
-    git clone [https://github.com/SEU_USUARIO/NOME_DO_PROJETO.git](https://github.com/SEU_USUARIO/NOME_DO_PROJETO.git)
+    git clone [https://github.com/doctor069/Residencia-de-Software-I---UNIT.git](https://github.com/doctor069/Residencia-de-Software-I---UNIT.git)
     ```
 2.  **Abra no VS Code:**
     Abra a pasta do projeto no Visual Studio Code.
@@ -75,9 +86,9 @@ Como o projeto utiliza **ES6 Modules** (`import` / `type="module"`) para conecta
 
 -----
 
-## Banco de Dados e Estrutura de Dados
+## Banco de Dados (Firestore)
 
-O projeto utiliza o **Firebase Firestore**. Optamos por uma abordagem NoSQL para flexibilidade no armazenamento das respostas dos formulários.
+O projeto utiliza o **Firebase Firestore** (NoSQL). Quando o usuário confirma o cancelamento, um documento JSON unificado é enviado para a coleção `cancelamentos`.
 
 ### O que é salvo?
 
@@ -135,6 +146,12 @@ Dentro da pasta `scripts/`, existe um arquivo `app.js` e na pasta `HTML/partials
 
 Foi implementada uma lógica inteligente no `script.js` (`getPathPrefix`) que detecta se o usuário está na raiz ou em uma subpasta. Isso permite que o projeto funcione perfeitamente tanto localmente quanto no GitHub Pages, ajustando os caminhos dos assets (imagens e CSS) automaticamente.
 
+### 3\. Acessibilidade Nativa
+
+Para o **Modo Leitura**, utilizamos a `window.speechSynthesis`.
+
+  * **Motivo:** Evitar dependências externas pesadas. A API nativa permite controle total via JavaScript, possibilitando recursos avançados como o bloqueio de cliques acidentais enquanto o texto está sendo lido.
+
 -----
 
 ## Contribuição
@@ -144,6 +161,3 @@ Este é um projeto acadêmico/portfólio.
 -----
 
 **Desenvolvido para a disciplina de Residência em Software I.**
-
-```
-```
