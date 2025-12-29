@@ -1,105 +1,131 @@
-# EngPlay - Módulo de Cancelamento e Retenção
+# EngPlay - Cancellation and Retention Module (Churn Reduction)
 
-Este projeto consiste na implementação Front-end e integração Back-end (Firebase) do fluxo de cancelamento de assinatura da plataforma de cursos **EngPlay**. 
+This project consists of the Front-end implementation and Back-end integration (Firebase) of the subscription cancellation flow for the **EngPlay** course platform.
 
-O objetivo do módulo não é apenas processar o cancelamento, mas atuar como uma ferramenta de retenção estratégica (Churn Reduction) e coleta de feedback, identificando os motivos da saída do aluno através de dados qualitativos e quantitativos.
+Developed by **Squad 28** as part of the Software Residency delivery for Porto Digital / UNIT.
 
-## Funcionalidades
+## Problem & Solution
 
-### Fluxo de Retenção
-* **Jornada Persuasiva:** Design dividido em etapas de impacto (aversão à perda), avaliação e diagnóstico.
-* **Soft Landing (72h):** O cancelamento não é imediato. O sistema agenda o encerramento para 72 horas, mantendo o acesso liberado para permitir ações de recuperação (Win-back) por parte da equipe.
+**The Challenge:** Subscription services face high cancellation rates (*churn*), often without understanding the real reasons for user departure or having the chance to reverse the decision.
 
-### Acessibilidade e Inclusão (Destaque)
-* **Modo Leitura (Text-to-Speech):** Implementação da **Web Speech API** nativa. O usuário pode ativar um modo onde o site lê em voz alta os textos e botões ao clicar, facilitando o uso para pessoas com baixa visão ou dislexia.
-* **VLibras:** Integração completa com o widget de tradução para Libras em todas as telas.
-* **Tema Dark/Light:** Sistema de troca de temas com persistência (o site "lembra" a escolha do usuário).
-
-### Segurança e Compliance
-* **Bloqueio Inteligente:** O botão de confirmação final inicia **bloqueado**.
-* **Validação de Termos:** O usuário é obrigado a marcar "Concordo com os Termos" e "Estou ciente da Perda" para liberar a ação de cancelamento, garantindo respaldo jurídico.
-
-### Dados e Persistência
-* **Persistência de Dados (Firebase):** Integração com Firestore Database para salvar o dossiê completo do cancelamento.
-* **Gerenciamento de Estado Local:** Uso de `localStorage` para manter dados temporários entre as páginas (ex: notas dadas na avaliação) e preferências de UI (Sidebar/Tema).
-
-## Tecnologias Utilizadas
-
-* **HTML5** (Semântico e Acessível)
-* **CSS3** (Modular, Variáveis, Flexbox e Grid)
-* **JavaScript** (Vanilla JS ES6+ Modules)
-* **Web Speech API** (Síntese de voz nativa)
-* **Firebase Firestore** (Banco de Dados NoSQL)
+**Our Solution:** We developed an intelligent flow that not only processes the cancellation but acts as a strategic retention tool.
+* **Diagnosis:** Collection of qualitative data (written feedback) and quantitative data (categorized reasons).
+* **Soft Landing (72h):** Cancellation is not immediate. The system schedules the termination for 72 hours later, keeping access active. This allows the CS (Customer Success) team to use the collected data to contact the user and attempt recovery strategies (*Win-back*) before the definitive block.
 
 ---
 
-## Estrutura do Projeto
+## The Team (Squad 28)
 
-O projeto foi organizado para separar responsabilidades de estilização, lógica e estrutura:
+Collaboratively developed by:
+
+* [@nicolascleik](https://github.com/nicolascleik)
+* [@ThiiagoAlvess](https://github.com/ThiiagoAlvess)
+* [@joserenato06](https://github.com/joserenato06)
+* [@Gustavoac0909](https://github.com/Gustavoac0909)
+* [@FernandaSampaio15](https://github.com/FernandaSampaio15)
+* [@luisfcosta-byte](https://github.com/luisfcosta-byte)
+* [@CaioSouza0121](https://github.com/CaioSouza0121)
+* [@Erick2029-del](https://github.com/Erick2029-del)
+
+---
+
+## Key Features
+
+### 1. Retention & Diagnosis Flow
+[cite_start]Based on real user personas (Rafael, Juliana, Beatriz, Lucas, and Carla) [cite: 11-208], the flow guides the user through psychological stages:
+* **Persuasive Journey:** Impact stages (loss aversion regarding progress/certificates) before the final decision.
+* **Qualitative Feedback:** Star rating (1-5) for Content, Didactics, and Usability.
+* **Quantitative Feedback:** Selection of reasons (e.g., "Financial", "Lack of Time", "Content").
+
+### 2. Accessibility & Inclusion (Highlight)
+The project was built with a strong focus on accessibility:
+* **Read Mode (Text-to-Speech):** Implementation of the native **Web Speech API**. Users can activate a mode where the site reads texts and buttons aloud upon clicking, facilitating use for people with low vision or dyslexia.
+    * *Safety:* Accidental clicks are blocked while the text is being read.
+* **VLibras:** Floating widget for Brazilian Sign Language (Libras) translation integrated into all screens.
+
+### 3. Personalization & UI
+* **Dark/Light Theme:** Theme switching system with persistence via `localStorage` (the site "remembers" the user's choice).
+* **Responsive Sidebar:** Retractable side menu that adapts to mobile and desktop, also preserving state.
+
+### 4. Security & Compliance
+* **Smart Lock:** The "Confirm Cancellation" button starts as **disabled**.
+* **Legal Validation:** The user is forced to check *"I agree to the Terms"* and *"I am aware of the Loss"* to unlock the action, ensuring legal backing against future claims.
+
+---
+
+## Tech Stack
+
+Following the project's technical specification:
+
+* **Front-End:** Semantic HTML5, CSS3 (Grid/Flexbox, Variables), JavaScript (Vanilla ES6+ Modules).
+* **Accessibility:** Web Speech API (Native), VLibras Widget.
+* **Back-End (BaaS):** Firebase Firestore (NoSQL Database).
+* **Version Control:** Git/GitHub.
+
+---
+
+## Project Structure
+
+The project separates responsibilities for styling, logic, and structure:
 
 ```text
 RESIDENCIA.../
-├── 📂 assets/                # Imagens e ícones do projeto
+├── 📂 assets/                # Images and icons
 ├── 📂 CSS/
-│   ├── 📂 estilo_cada_pagina/ # CSS específico para cada etapa do fluxo
-│   ├── 📂 estilo_layout/      # Temas (light_mode.css)
-│   ├── css_geral.css          # Resets e estilos globais
-│   └── layout.css             # Estilos do Header e Sidebar
+│   ├── 📂 estilo_cada_pagina/ # Specific CSS for each flow step
+│   ├── 📂 estilo_layout/      # Themes (light_mode.css)
+│   ├── css_geral.css          # Global resets
+│   └── layout.css             # Header and Sidebar
 ├── 📂 HTML/
-│   ├── 📂 partials/           # (Legado) Fragmentos de Header/Sidebar para uso com fetch
-│   ├── 📂 sub-paginas/        # Outras páginas da plataforma
-│   ├── avaliacao_do_curso.html
-│   ├── confirmacao.html
-│   ├── diagnostico.html
-│   └── impacto.html
+│   ├── index.html             # (1) Decision/Home
+│   ├── impacto.html           # (2) Loss Awareness
+│   ├── avaliacao_do_curso.html# (3) Qualitative Collection
+│   ├── diagnostico.html       # (4) Reasons and DB Submission
+│   ├── confirmacao.html       # (5) Termination (Soft Landing)
+│   └── ...
 ├── 📂 scripts/
-│   ├── app.js                 # (Opcional) Script para carregar HTML dinamicamente
-│   ├── avaliacao_do_curso.js  # Lógica de estrelas e salvamento temporário
-│   ├── diagnostico.js         # Integração final com Firebase
-│   └── script.js              # Lógica global (Tema, Sidebar, Caminhos)
-├── index.html                 # Página inicial do fluxo (Home/Decisão)
+│   ├── avaliacao_do_curso.js  # Star rating logic and temporary state
+│   ├── diagnostico.js         # Firebase Integration (addDoc)
+│   └── script.js              # Global logic (Theme, Sidebar, Accessibility)
 └── README.md
-````
 
-## Como Executar o Projeto
+```
 
-Para rodar este projeto localmente, siga os passos abaixo.
+---
 
-### Pré-requisitos
+## How to Run
 
-Como o projeto utiliza **ES6 Modules** (`import` / `type="module"`) para conectar ao Firebase, **você não pode apenas abrir o arquivo HTML com dois cliques** (devido a políticas de CORS dos navegadores). É necessário rodar um servidor local.
+⚠️ **Note:** Since the project uses **ES6 Modules** to connect to Firebase, you need a local HTTP server.
 
-### Passo a Passo
+1. **Clone the repository:**
+```bash
+git clone [https://github.com/nicolascleik/Residencia-de-Software-I---UNIT.git](https://github.com/nicolascleik/Residencia-de-Software-I---UNIT.git)
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone [https://github.com/doctor069/Residencia-de-Software-I---UNIT.git](https://github.com/doctor069/Residencia-de-Software-I---UNIT.git)
-    ```
-2.  **Abra no VS Code:**
-    Abra a pasta do projeto no Visual Studio Code.
-3.  **Use o Live Server:**
-      * Instale a extensão **Live Server** no VS Code.
-      * Clique com o botão direito no arquivo `index.html`.
-      * Selecione **"Open with Live Server"**.
-4.  **Navegação:**
-    O projeto abrirá no seu navegador padrão. Siga o fluxo de cancelamento para testar a gravação no banco de dados.
+```
 
------
 
-## Banco de Dados (Firestore)
+2. **Open in VS Code:**
+Open the root project folder.
+3. **Use Live Server:**
+* Install the **Live Server** extension in VS Code.
+* Right-click on `HTML/index.html`.
+* Select **"Open with Live Server"**.
 
-O projeto utiliza o **Firebase Firestore** (NoSQL). Quando o usuário confirma o cancelamento, um documento JSON unificado é enviado para a coleção `cancelamentos`.
 
-### O que é salvo?
+4. **Test:** The browser will open the flow. Follow the steps to confirmation to generate a database record.
 
-Quando o usuário confirma o cancelamento na página `diagnostico.html`, um documento JSON é enviado para a coleção `cancelamentos` contendo:
+---
 
-  * **Identificação:** Nome e E-mail (Mockados para este ambiente de teste).
-  * **Feedback:** Notas (1-5) para Conteúdo, Didática e Usabilidade + Comentário opcional.
-  * **Motivos:** Lista (Array) com os motivos selecionados (ex: `["Financeiro", "Falta de Tempo"]`).
-  * **Metadados:** Data e Hora exata da solicitação.
+## Database (Firestore)
 
-### Exemplo de Registro no Banco:
+The solution uses two-layer persistence:
+
+1. **Local (Client-Side):** `localStorage` to keep the theme and evaluation ratings while the user navigates between HTML pages.
+2. **Cloud (Server-Side):** Upon confirmation, a unified JSON document is sent to the `cancelamentos` collection in Firestore.
+
+### JSON Document Schema:
+
+*Note: The keys are stored in Portuguese to match the backend implementation.*
 
 ```json
 {
@@ -111,53 +137,34 @@ Quando o usuário confirma o cancelamento na página `diagnostico.html`, um docu
     "estrelas": [
        {"categoria": "Conteúdo", "nota": 5},
        {"categoria": "Didática", "nota": 4},
-       {"categoria": "Usabilidade", "nota": 5}
+       {"categoria": "Usabilidade", "nota": 2}
     ],
-    "comentario": "Gostei do curso, mas estou sem tempo."
+    "comentario": "Gostei do conteúdo, mas o app trava muito."
   },
-  "motivosCancelamento": ["Falta de Tempo / Problemas Pessoais"],
+  "motivosCancelamento": ["Usabilidade / Bugs", "Financeiro"],
   "metadata": {
-    "canceladoEm": "2023-11-22T10:30:00.000Z",
+    "canceladoEm": "Timestamp (ISO 8601)",
     "displayData": "22/11/2023, 10:30:00"
   }
 }
+
 ```
 
-### Segurança e Senhas
+---
 
-Você notará que **não salvamos a senha do usuário** neste fluxo.
+## Workflow Logic
 
-  * **Motivo:** Em um cenário real, o usuário já estaria logado na plataforma para acessar a página de cancelamento.
-  * **Boas Práticas:** Nunca salvamos senhas em texto puro ou em formulários de feedback. A autenticação deve ser gerenciada por um serviço dedicado (como o Firebase Auth) e apenas o ID do usuário (UID) seria vinculado a este documento de cancelamento.
+The technical flow follows this pipeline :
 
------
+1. **Initialization:** `script.js` checks user preferences (Theme/Menu) on load to avoid FOUC (Flash of Unstyled Content).
+2. **Temporary State:** In `avaliacao_do_curso.html`, ratings are saved in the browser (`localStorage`) so they aren't lost during page transition.
+3. **Consolidation:** In `diagnostico.html`, the script retrieves ratings from storage, validates security checkboxes, and sends the complete package to Firebase.
+4. **Soft Landing:** After success (HTTP 200), the user sees the `confirmacao.html` screen with the 72-hour access notice.
 
-## Decisões de Implementação
+---
 
-### 1\. Componentização (Fetch vs Static)
+**Developed for the Software Residency I course - 2025.**
 
-Dentro da pasta `scripts/`, existe um arquivo `app.js` e na pasta `HTML/partials/` existem arquivos para o Header e Sidebar.
+```
 
-  * **Abordagem Inicial:** A ideia original era carregar o Header e a Sidebar dinamicamente usando `fetch()` para evitar repetição de código.
-  * **Abordagem Atual:** Para garantir compatibilidade total com hospedagens estáticas simples (como **GitHub Pages**) e evitar atrasos visuais (FOUC - Flash of Unstyled Content) ou problemas de rota (CORS/Caminhos Relativos), optamos por manter o HTML do menu estático em cada página na versão final de produção.
-  * *Nota:* O código do `app.js` foi mantido no projeto para demonstrar conhecimento da técnica de injeção de componentes via JavaScript.
-
-### 2\. Gerenciamento de Caminhos
-
-Foi implementada uma lógica inteligente no `script.js` (`getPathPrefix`) que detecta se o usuário está na raiz ou em uma subpasta. Isso permite que o projeto funcione perfeitamente tanto localmente quanto no GitHub Pages, ajustando os caminhos dos assets (imagens e CSS) automaticamente.
-
-### 3\. Acessibilidade Nativa
-
-Para o **Modo Leitura**, utilizamos a `window.speechSynthesis`.
-
-  * **Motivo:** Evitar dependências externas pesadas. A API nativa permite controle total via JavaScript, possibilitando recursos avançados como o bloqueio de cliques acidentais enquanto o texto está sendo lido.
-
------
-
-## Contribuição
-
-Este é um projeto acadêmico/portfólio.
-
------
-
-**Desenvolvido para a disciplina de Residência em Software I.**
+```
